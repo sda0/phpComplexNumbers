@@ -13,10 +13,12 @@ class AlgebraicComplexNumber implements IAlgebraicForm {
 
 	/**
 	 * AlgebraicComplexNumber constructor.
+	 * @param float $real
+	 * @param float $im
 	 */
-	public function __construct() {
-		$this->real = 0.0;
-		$this->im = 0.0;
+	public function __construct(float $real = 0, float $im = 0) {
+		$this->real = $real;
+		$this->im = $im;
 	}
 
 	public function setReal($real) {

@@ -12,10 +12,13 @@ class ExponentialComplexNumber implements IAlgebraicForm {
 
 	/**
 	 * ExponentialComplexNumber constructor.
+	 * @param float $abs
+	 * @param float $angle
+	 *
 	 */
-	public function __construct() {
-		$this->abs = 0.0;
-		$this->angle = 0.0;
+	public function __construct(float $abs = 0, float $angle = 0) {
+		$this->abs = $abs;
+		$this->angle = $angle;
 	}
 
 	/** @param float $abs

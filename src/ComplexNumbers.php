@@ -2,6 +2,7 @@
 namespace Sda0\Complex;
 
 
+use Sda0\Complex\Exception\DivisionByZeroException;
 use Sda0\Complex\Form\AlgebraicComplexNumber;
 
 /**
@@ -51,14 +52,24 @@ class ComplexNumbers {
 	}
 
 	/**
-	 * Calculates the exponential of a complex number: z = exp(c)
+	 * Returns the division of two complex numbers: z = c1 / c2
 	 *
-	 * @param IAlgebraicForm $c
+	 * @param IAlgebraicForm $a
+	 * @param IAlgebraicForm $b
 	 * @return AlgebraicComplexNumber
+	 * @throws DivisionByZeroException
 	 */
-	public static function exp(IAlgebraicForm $c) :AlgebraicComplexNumber {
-		$r = exp($c->getReal()) * cos($c->getIm());
-		$i = $r * sin($c->getIm());
+	public static function div(IAlgebraicForm $a, IAlgebraicForm $b) :AlgebraicComplexNumber {
+		$ar = $a->getReal(); $ai = $a->getIm();
+		$br = $b->getReal(); $bi = $b->getIm();
+
+		$div = $br*$br + $bi*$bi;
+		if ($div === 0.0) {
+			throw new DivisionByZeroException(__METHOD__ . ': division by zero');
+		}
+
+		$r = ($ar*$br + $ai*$bi)/$div;
+		$i = ($ai*$br - $ar*$bi)/$div;
 
 		$z = new AlgebraicComplexNumber();
 		$z->setReal($r)
@@ -75,7 +86,7 @@ class ComplexNumbers {
 	 */
 	public static function mult(IAlgebraicForm $a, IAlgebraicForm $b) :AlgebraicComplexNumber {
 		$r = ($a->getReal() * $b->getReal()) - ($a->getIm() * $b->getIm());
-		$i = ($a->getReal() * $b->getIm()) + ($a->getReal() * $b->getIm());
+		$i = ($a->getReal() * $b->getIm()) + ($b->getReal() * $a->getIm());
 
 		$z = new AlgebraicComplexNumber();
 		$z->setReal($r)
